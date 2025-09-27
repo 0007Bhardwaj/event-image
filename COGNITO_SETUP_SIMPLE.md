@@ -48,8 +48,8 @@ Update `src/config/cognito.js` with your credentials:
 
 ```javascript
 const poolData = {
-  UserPoolId: 'ap-south-1_UGticddTE', // Your User Pool ID
-  ClientId: '6jj1m6avpjl7ck5tvn1j5jg9b2' // Your App Client ID
+  UserPoolId: 'ap-south-1_LYHBqaq6n', // Your User Pool ID
+  ClientId: '2l7fi4ih7moirjehemp5g1c336' // Your App Client ID
 };
 ```
 
@@ -103,8 +103,8 @@ const poolData = {
 ## 🎯 **Final Configuration**
 
 ### **Your Cognito URLs:**
-- **User Pool:** `ap-south-1_UGticddTE`
-- **App Client:** `6jj1m6avpjl7ck5tvn1j5jg9b2`
+- **User Pool:** `ap-south-1_LYHBqaq6n`
+- **App Client:** `2l7fi4ih7moirjehemp5g1c336`
 
 ### **Your App URLs:**
 - **Development:** `http://localhost:5174`

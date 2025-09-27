@@ -11,8 +11,8 @@ import {
 // Cognito Configuration
 // Replace these with your actual Cognito User Pool details
 const poolData = {
-  UserPoolId: 'ap-south-1_UGticddTE', // Replace with your User Pool ID
-  ClientId: '6jj1m6avpjl7ck5tvn1j5jg9b2', // Replace with your App Client ID
+  UserPoolId: 'ap-south-1_LYHBqaq6n', // Replace with your User Pool ID
+  ClientId: '2l7fi4ih7moirjehemp5g1c336', // Replace with your App Client ID
 };
 
 // Create User Pool instance

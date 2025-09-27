@@ -7,10 +7,11 @@ import { Mail, ArrowLeft, CheckCircle, AlertCircle, Loader, Sparkles, Camera } f
 const ConfirmSignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { confirmationEmail, isLoading, error } = useSelector((state) => state.auth);
+  const { confirmationEmail, isLoading, error, requiresConfirmation } = useSelector((state) => state.auth);
   const [confirmationCode, setConfirmationCode] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -18,6 +19,17 @@ const ConfirmSignUp = () => {
       navigate('/register');
     }
   }, [confirmationEmail, navigate]);
+
+  // Redirect to login page after successful verification
+  useEffect(() => {
+    if (!requiresConfirmation && !confirmationEmail && !isLoading) {
+      setIsVerified(true);
+      // Show success message for 2 seconds before redirecting
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+    }
+  }, [requiresConfirmation, confirmationEmail, isLoading, navigate]);
 
   const handleConfirm = async (e) => {
     e.preventDefault();
@@ -64,9 +76,31 @@ const ConfirmSignUp = () => {
           </div>
         </div>
 
+        {/* Success Message */}
+        {isVerified && (
+          <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="bg-green-50/90 backdrop-blur-lg shadow-2xl rounded-3xl p-8 border border-green-200">
+              <div className="text-center">
+                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
+                </div>
+                <h2 className="text-2xl font-bold text-green-800 mb-2">Email Verified!</h2>
+                <p className="text-green-700 mb-4">
+                  Your email has been successfully verified. You can now sign in to your account.
+                </p>
+                <div className="flex items-center justify-center space-x-2 text-green-600">
+                  <Loader className="h-4 w-4 animate-spin" />
+                  <span className="text-sm">Redirecting to login...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Form Card */}
-        <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-8 border border-white/20">
+        {!isVerified && (
+          <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-8 border border-white/20">
             <form className="space-y-6" onSubmit={handleConfirm}>
               {/* Confirmation Code Input */}
               <div>
@@ -176,9 +210,11 @@ const ConfirmSignUp = () => {
             </div>
           </div>
         </div>
+        )}
 
         {/* Additional Info */}
-        <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        {!isVerified && (
+          <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="mt-8 text-center">
             <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Check Your Email</h3>
@@ -189,6 +225,7 @@ const ConfirmSignUp = () => {
             </div>
           </div>
         </div>
+        )}
       </div>
     </div>
   );
