@@ -111,21 +111,21 @@ const poolData = {
    - Application type: "Web application"
    - Name: "EventPhotos Web Client"
    - Authorized JavaScript origins: Add your domains
-     - `http://localhost:3000` (for development)
-     - `https://yourdomain.com` (for production)
+     - `http://localhost:5174` (for development)
+     - `https://event-image.vercel.app` (for production)
    - Authorized redirect URIs: Add your Cognito domain
-     - `https://your-cognito-domain.auth.us-east-1.amazoncognito.com/oauth2/idpresponse`
+     - `https://your-cognito-domain.auth.ap-south-1.amazoncognito.com/oauth2/idpresponse`
 
 #### 4.3: Update App Client Settings
 1. In your Cognito User Pool, go to "App integration" tab
 2. Select your app client
 3. Edit "Hosted authentication pages"
 4. Add your domain to "Allowed callback URLs":
-   - `http://localhost:3000` (for development)
-   - `https://yourdomain.com` (for production)
+   - `http://localhost:5174` (for development)
+   - `https://event-image.vercel.app` (for production)
 5. Add your domain to "Allowed sign-out URLs":
-   - `http://localhost:3000` (for development)
-   - `https://yourdomain.com` (for production)
+   - `http://localhost:5174` (for development)
+   - `https://event-image.vercel.app` (for production)
 
 #### 4.4: Update Configuration
 Update `src/config/cognito.js` with your Cognito domain:

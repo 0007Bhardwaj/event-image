@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import cognitoAuth, { googleSignIn } from '../../config/cognito';
+import cognitoAuth from '../../config/cognito';
 
 // Async thunks
 export const loginUser = createAsyncThunk(
@@ -69,22 +69,6 @@ export const resendConfirmationCode = createAsyncThunk(
   }
 );
 
-export const loginWithGoogle = createAsyncThunk(
-  'auth/loginWithGoogle',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await googleSignIn.signInWithGoogle();
-      return {
-        user: response.user,
-        token: response.token,
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken
-      };
-    } catch (error) {
-      return rejectWithValue(error.message || 'Google login failed');
-    }
-  }
-);
 
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
@@ -242,24 +226,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(resendConfirmationCode.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      // Google Login
-      .addCase(loginWithGoogle.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(loginWithGoogle.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.accessToken = action.payload.accessToken;
-        state.refreshToken = action.payload.refreshToken;
-        state.isAuthenticated = true;
-        state.error = null;
-      })
-      .addCase(loginWithGoogle.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
