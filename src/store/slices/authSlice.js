@@ -7,6 +7,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await cognitoAuth.signIn(email, password);
+      console.log("🚀 ~ response:", response)
       return {
         user: response.user,
         token: response.idToken,
